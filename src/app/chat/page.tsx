@@ -17,6 +17,20 @@ export default function Home() {
 
     // const [response, setResponse] = useState("")
 
+    const addMessage = (message) => {
+        const side = chatList.length % 2 === 0 ? "left" : "right";
+        const avatarPath = side === "left" ? "/judge.png" : "/user.png"; // 왼쪽과 오른쪽에 따른 이미지 경로 설정
+        
+        const newMessage = {
+          message: message,
+          side: side,
+          avatar: avatarPath // 사용자 프로필 이미지 경로
+        };
+        setChatList([...chatList, newMessage]);
+        //setUserPrompt(""); // 입력 필드 클리어
+      };
+      
+
     const open_ai_service = new OpenAIService();
 
     var response: string
@@ -77,23 +91,30 @@ export default function Home() {
                     User Prompt:<br/>
                     { userPrompt }
                     <br/><br/><br/><br/>
-                    <ul>
+                    <ul className="chat-container">
                         {chatList.map((item, index) => (
-                        <li key={index}>{item}</li>
+                            <div key={index} className={`message-container ${item.side}`}>
+                            <img src={item.avatar} alt={`${item.username}'s avatar`} className="avatar" />
+                            <li key={index} className={`chat-item ${item.side}`}>
+                            <div>
+                                <strong>{item.username}</strong> {item.message}
+                            </div>
+                            </li>
+                            </div>
                         ))}
                     </ul>
                     <br/><br/>
                         
                 </div>
-                <div className="w100">
-                    <InputField
-                        type="add"
-                        placeholder="상황을 입력하세요..."
-                        toParent={(value: any) => setUserPrompt(value)}
+                <div className="input-container">
+                    <textarea
+                        className="input-field"
+                        placeholder="상황을 입력하세요."
+                        onChange={(e) => setUserPrompt(e.target.value)}
                         required={false}
                         value={userPrompt}
                     />
-                    <Button type="mini" text="입력" onClick={() => llmResponse(userPrompt)} />
+                    <Button type="mini" text="입력" onClick={() => addMessage(userPrompt)} />
                 </div>
             </header>
         </div>

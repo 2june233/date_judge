@@ -1,9 +1,9 @@
 "use client"
 
-import { useResponsive } from "@/presentation/hooks/useResponsive"
+//import { useResponsive } from "@/presentation/hooks/useResponsive"
 import "./header.css"
-import { Device } from "@/app/types";
-import Icon from "@/presentation/assets/image/icon";
+//import { Device } from "@/app/types";
+//import Icon from "@/presentation/assets/image/icon";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Button from "../button";
